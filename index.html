@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunny</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --muted: #666;
+      --accent: #e8e8e8;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
+
+    /* subtle grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: -1px;
+    }
+
+    .name {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .bio {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 400;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      animation: fadeUp 0.6s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+    }
+
+    .link:hover::after { transform: translateX(100%); }
+    .link:hover {
+      background: #1e1e1e;
+      border-color: #3a3a3a;
+      transform: translateY(-1px);
+    }
+    .link:active { transform: translateY(0); }
+
+    .link:nth-child(1) { animation-delay: 0.1s; }
+    .link:nth-child(2) { animation-delay: 0.2s; }
+    .link:nth-child(3) { animation-delay: 0.3s; }
+    .link:nth-child(4) { animation-delay: 0.4s; }
+
+    .link-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .link-icon svg { width: 16px; height: 16px; }
+
+    .icon-github { background: #1e1e1e; border: 1px solid #333; }
+    .icon-instagram { background: #1e1218; border: 1px solid #3a1f2e; }
+    .icon-linkedin { background: #0f1823; border: 1px solid #1a3248; }
+    .icon-discord { background: #12131e; border: 1px solid #252840; }
+
+    .link-text { flex: 1; }
+    .link-name { display: block; font-size: 14px; font-weight: 500; }
+    .link-handle {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      margin-top: 1px;
+    }
+
+    .link-arrow {
+      color: var(--muted);
+      font-size: 16px;
+      transition: transform 0.2s, color 0.2s;
+    }
+    .link:hover .link-arrow { transform: translateX(3px); color: var(--text); }
+
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 11px;
+      color: #333;
+      font-family: 'DM Mono', monospace;
+      animation: fadeUp 0.6s 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="geto.jpg" alt="Sunny" class="avatar" style="object-fit: cover;">
+      <div class="name">Sunny</div>
+      <div class="bio">eng. de software · UCB</div>
+    </div>
+
+    <div class="links">
+
+      <a class="link" href="https://github.com/Sunnyzit0" target="_blank">
+        <div class="link-icon icon-github">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e8e8e8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-name">GitHub</span>
+          <span class="link-handle">@Sunnyzit0</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link" href="https://instagram.com/ato.js" target="_blank">
+        <div class="link-icon icon-instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c77daa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-name">Instagram</span>
+          <span class="link-handle">@ato.js</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link" href="https://www.linkedin.com/in/arthur-da-costa-silva-056a24353/" target="_blank">
+        <div class="link-icon icon-linkedin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b9bd5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-name">LinkedIn</span>
+          <span class="link-handle">Arthur da Costa Silva</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link" href="https://discord.com/" target="_blank">
+        <div class="link-icon icon-discord">
+          <svg viewBox="0 0 24 24" fill="#7289da" stroke="none">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.04.03.052a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-name">Discord</span>
+          <span class="link-handle">sunnyzro</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+    </div>
+
+    <div class="footer">sunny · 2026</div>
+  </div>
+</body>
+</html>
